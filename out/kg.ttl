@@ -44,7 +44,8 @@ ex:ENR_S03_C02_115-1 a ex:Enrollment ;
 
 ex:T01 a ex:Teacher ;
     rdfs:label "Lydia Lin"@en ;
-    ex:teaches ex:C02 .
+    ex:teaches ex:C01,
+        ex:C02 .
 
 ex:S01 a ex:GraduateStudent ;
     ex:enrolledIn ex:C01 ;

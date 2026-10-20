@@ -28,6 +28,7 @@ digraph KG {
     S02 -> C01 [label="enrolledIn\nsemester=115-1"];
     S03 -> C02 [label="enrolledIn"];
     T01 -> C02 [label="teaches\nyear=2026"];
+    T01 -> C01 [label="teaches\nyear=2026"];
     S03 -> C01 [label="主張：unverified (LLM)\n vs refuted (教務處)\n→ 不建立 enrolledIn", style=dotted, color="#b0413e", fontcolor="#b0413e", arrowhead=odot];
   }
 

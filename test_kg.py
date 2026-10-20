@@ -147,6 +147,14 @@ def test_NEG_duplicate_course_node_detected():
     assert len(ids) != len(set(ids)), "偵測函式應發現重複 id"
 
 
+def test_one_teacher_teaches_two_courses(rdf, lpg):
+    """Lydia Lin（T01）授兩門課：仍只有一個 Teacher 節點，連到兩門課"""
+    assert set(rdf.objects(EX.T01, EX.teaches)) == {EX.C01, EX.C02}
+    teachers = [n for n, d in lpg.nodes(data=True) if "Teacher" in d["labels"]]
+    assert teachers == ["T01"]
+    assert sorted(v for u, v, d in lpg.edges(data=True) if u == "T01" and d["type"] == "TEACHES") == ["C01", "C02"]
+
+
 # ════════════════ 查詢可執行性（20%）════════════════
 def test_sparql_students_of_c01(rdf):
     got = [(str(r.s).rsplit("/", 1)[-1], str(r.name)) for r in rdf.query(b.SPARQL_STUDENTS_OF_C01)]

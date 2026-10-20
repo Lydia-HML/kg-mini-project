@@ -11,9 +11,10 @@
     "students": 3,
     "courses": 2,
     "teachers": 1,
+    "teaching_links": 2,
     "enrollments": 3,
     "claims": 2
   },
   "shacl_conforms": true,
-  "triples": 51
+  "triples": 52
 }

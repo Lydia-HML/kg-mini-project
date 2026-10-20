@@ -73,7 +73,7 @@ def load_sources():
             report["rejected"].append(f"claims.csv:{row_no} 無法對應的 ID")
 
     report["counts"] = {"students": len(students), "courses": len(courses),
-                        "teachers": len(teaching), "enrollments": len(enrollments),
+                        "teachers": len({r["teacher_no"] for r in teaching}), "teaching_links": len(teaching), "enrollments": len(enrollments),
                         "claims": len(claims)}
     return students, courses, enrollments, teaching, claims, report
 
