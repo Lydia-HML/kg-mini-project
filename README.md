@@ -34,14 +34,14 @@ pytest -v              # 22 項測試（依評分面向分組，含反例）
 | 五筆 RDF triples | `out/kg.ttl` 共 50+ 筆；最小五筆：`S01 a Student`、`S02 a Student`、`C01 a Course`、`S01 enrolledIn C01`、`S02 enrolledIn C01` |
 | ≥3 LPG 節點、2 關係 | S01、S02、C01 ＋ 兩條 `ENROLLED_IN {semester}` |
 | 簡要 ontology | `ontology.ttl` |
-| 兩條查詢 | SPARQL 與 Cypher「選 C01 的學生」→ S01 小美、S02 小華 |
+| 兩條查詢 | SPARQL 與 Cypher「選 C01 的學生」→ S01 Mei、S02 Hua |
 
 ## CSV → KG Mapping（第 16 頁）
 
 | 來源欄位 | 目標 | 轉換規則 |
 |---|---|---|
 | `students.student_no` | `Student.id` / `ex:{id}` | trim 空白、驗證唯一 |
-| `students.name` | `ex:name` / `s.name` | `"…"@zh` 語言標記 literal |
+| `students.name` | `ex:name` / `s.name` | `"…"@en` 語言標記 literal |
 | `students.level` | `rdf:type` / 額外 label | `graduate` → `GraduateStudent` |
 | `courses.course_code` | `Course.id` / `ex:{id}` | 以穩定 ID 去重 |
 | `enrollment(student_no, course_code, semester)` | `ex:enrolledIn` ＋ `ex:Enrollment` 事件節點；LPG：`[:ENROLLED_IN {semester}]` | 無法對應 ID、空值 → 拒收並記錄；同學期同課 → 視為重複 |

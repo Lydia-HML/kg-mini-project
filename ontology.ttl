@@ -5,13 +5,13 @@
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
-ex:Student          a owl:Class ; rdfs:label "學生"@zh .
-ex:GraduateStudent  a owl:Class ; rdfs:subClassOf ex:Student ; rdfs:label "研究生"@zh .
-ex:Course           a owl:Class ; rdfs:label "課程"@zh .
-ex:Teacher          a owl:Class ; rdfs:label "教師"@zh .
-ex:Enrollment       a owl:Class ; rdfs:label "修課紀錄（事件／陳述節點）"@zh .
-ex:EnrollmentClaim  a owl:Class ; rdfs:label "修課主張（未確認／有衝突的證據）"@zh ;
-    rdfs:comment "不等於確定的 ex:enrolledIn；只記錄某來源『聲稱』的內容與狀態（講義第 22–23 頁）"@zh .
+ex:Student          a owl:Class ; rdfs:label "Student"@en .
+ex:GraduateStudent  a owl:Class ; rdfs:subClassOf ex:Student ; rdfs:label "Graduate student"@en .
+ex:Course           a owl:Class ; rdfs:label "Course"@en .
+ex:Teacher          a owl:Class ; rdfs:label "Teacher"@en .
+ex:Enrollment       a owl:Class ; rdfs:label "Enrollment record (event / statement node)"@en .
+ex:EnrollmentClaim  a owl:Class ; rdfs:label "Enrollment claim (unverified or conflicting evidence)"@en ;
+    rdfs:comment "Not a confirmed ex:enrolledIn; records only what a source claims, with its status."@en .
 ex:Student owl:disjointWith ex:Course .
 
 ex:teaches a owl:ObjectProperty ; rdfs:domain ex:Teacher ; rdfs:range ex:Course .
@@ -22,7 +22,7 @@ ex:source  a owl:DatatypeProperty ; rdfs:range xsd:string .
 ex:enrolledIn a owl:ObjectProperty ;
     rdfs:domain ex:Student ;
     rdfs:range  ex:Course ;
-    rdfs:label  "修課"@zh .
+    rdfs:label  "enrolled in"@en .
 
 ex:name  a owl:DatatypeProperty ; rdfs:domain ex:Student ; rdfs:range rdf:langString .
 

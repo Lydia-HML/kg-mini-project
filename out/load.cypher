@@ -2,16 +2,16 @@
 CREATE CONSTRAINT student_id IF NOT EXISTS FOR (s:Student) REQUIRE s.id IS UNIQUE;
 CREATE CONSTRAINT course_id  IF NOT EXISTS FOR (c:Course)  REQUIRE c.id IS UNIQUE;
 
-MERGE (s:Student {id:"S01"}) SET s.name="小美" SET s:GraduateStudent;
-MERGE (s:Student {id:"S02"}) SET s.name="小華";
-MERGE (s:Student {id:"S03"}) SET s.name="小明";
-MERGE (c:Course {id:"C01"}) SET c.title="資料探勘";
-MERGE (c:Course {id:"C02"}) SET c.title="資訊網路";
+MERGE (s:Student {id:"S01"}) SET s.name="Mei" SET s:GraduateStudent;
+MERGE (s:Student {id:"S02"}) SET s.name="Hua";
+MERGE (s:Student {id:"S03"}) SET s.name="Ming";
+MERGE (c:Course {id:"C01"}) SET c.title="Data Mining";
+MERGE (c:Course {id:"C02"}) SET c.title="Computer Networks";
 
 MATCH (s:Student {id:"S01"}), (c:Course {id:"C01"}) MERGE (s)-[r:ENROLLED_IN {semester:"115-1"}]->(c) SET r.recorded_on=date("2026-09-01"), r.source="enrollment.csv:2";
 MATCH (s:Student {id:"S02"}), (c:Course {id:"C01"}) MERGE (s)-[r:ENROLLED_IN {semester:"115-1"}]->(c) SET r.recorded_on=date("2026-09-02"), r.source="enrollment.csv:3";
 MATCH (s:Student {id:"S03"}), (c:Course {id:"C02"}) MERGE (s)-[r:ENROLLED_IN {semester:"115-1"}]->(c) SET r.recorded_on=date("2026-09-03"), r.source="enrollment.csv:5";
-MERGE (t:Teacher {id:"T01"}) SET t.name="王老師" WITH t MATCH (c:Course {id:"C02"}) MERGE (t)-[:TEACHES {year:2026}]->(c);
+MERGE (t:Teacher {id:"T01"}) SET t.name="Lydia Lin" WITH t MATCH (c:Course {id:"C02"}) MERGE (t)-[:TEACHES {year:2026}]->(c);
 MERGE (x:EnrollmentClaim {id:"CLAIM_2"}) SET x.status="unverified", x.source="llm_extraction:meeting_notes_1015", x.semester="115-1", x.recorded_on=date("2026-10-15") WITH x MATCH (s:Student {id:"S03"}), (c:Course {id:"C01"}) MERGE (x)-[:ABOUT_STUDENT]->(s) MERGE (x)-[:ABOUT_COURSE]->(c);
 MERGE (x:EnrollmentClaim {id:"CLAIM_3"}) SET x.status="refuted", x.source="registrar_export_1016", x.semester="115-1", x.recorded_on=date("2026-10-16") WITH x MATCH (s:Student {id:"S03"}), (c:Course {id:"C01"}) MERGE (x)-[:ABOUT_STUDENT]->(s) MERGE (x)-[:ABOUT_COURSE]->(c);
 

@@ -62,7 +62,7 @@ def test_core_triples(rdf):
 def test_name_is_literal_not_resource(rdf):
     """迷思 A：triple ≠ 三個節點；姓名是 literal（第 6 頁）"""
     for _, _, o in rdf.triples((None, EX.name, None)):
-        assert isinstance(o, Literal) and o.language == "zh"
+        assert isinstance(o, Literal) and o.language == "en"
 
 
 def test_one_course_node_shared(lpg):
@@ -142,7 +142,7 @@ def test_NEG_duplicate_course_node_detected():
     """常見扣分：兩位學生各複製一個 C01"""
     s, c, e, *_ = b.load_sources()
     g = b.build_lpg(s, c, e)
-    g.add_node("C01_copy", labels=["Course"], id="C01", title="資料探勘")
+    g.add_node("C01_copy", labels=["Course"], id="C01", title="Data Mining")
     ids = [d["id"] for _, d in g.nodes(data=True) if "Course" in d["labels"]]
     assert len(ids) != len(set(ids)), "偵測函式應發現重複 id"
 
@@ -150,11 +150,11 @@ def test_NEG_duplicate_course_node_detected():
 # ════════════════ 查詢可執行性（20%）════════════════
 def test_sparql_students_of_c01(rdf):
     got = [(str(r.s).rsplit("/", 1)[-1], str(r.name)) for r in rdf.query(b.SPARQL_STUDENTS_OF_C01)]
-    assert got == [("S01", "小美"), ("S02", "小華")]
+    assert got == [("S01", "Mei"), ("S02", "Hua")]
 
 
 def test_lpg_students_of_c01(lpg):
-    assert b.lpg_students_of(lpg, "C01") == [("S01", "小美"), ("S02", "小華")]
+    assert b.lpg_students_of(lpg, "C01") == [("S01", "Mei"), ("S02", "Hua")]
 
 
 def test_cypher_script_has_constraints_and_queries(src):

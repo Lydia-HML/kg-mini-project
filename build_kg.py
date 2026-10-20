@@ -85,12 +85,11 @@ def build_rdf(students, courses, enrollments, teaching=(), claims=()):
     for sid, s in students.items():
         node = EX[sid]
         g.add((node, RDF.type, EX.GraduateStudent if s["level"] == "graduate" else EX.Student))
-        g.add((node, EX.name, Literal(s["name"], lang="zh")))        # literal，不是第三個實體
+        g.add((node, EX.name, Literal(s["name"], lang="en")))        # literal，不是第三個實體
     for cid, c in courses.items():
         node = EX[cid]
         g.add((node, RDF.type, EX.Course))
-        g.add((node, RDFS.label, Literal(c["title_zh"], lang="zh")))
-        g.add((node, RDFS.label, Literal(c["title_en"], lang="en")))
+        g.add((node, RDFS.label, Literal(c["title"], lang="en")))
     for e in enrollments:
         s, c = EX[e["student_no"]], EX[e["course_code"]]
         g.add((s, EX.enrolledIn, c))                                   # 簡潔的直接邊（第 20 頁）
@@ -105,7 +104,7 @@ def build_rdf(students, courses, enrollments, teaching=(), claims=()):
     for t in teaching:
         node = EX[t["teacher_no"]]
         g.add((node, RDF.type, EX.Teacher))
-        g.add((node, RDFS.label, Literal(t["name"], lang="zh")))
+        g.add((node, RDFS.label, Literal(t["name"], lang="en")))
         g.add((node, EX.teaches, EX[t["course_code"]]))
     for c in claims:
         cl = EX[f"CLAIM_{c['_row']}"]
@@ -174,7 +173,7 @@ def build_lpg(students, courses, enrollments, teaching=(), claims=()):
         labels = ["Student"] + (["GraduateStudent"] if s["level"] == "graduate" else [])
         g.add_node(sid, labels=labels, id=sid, name=s["name"])
     for cid, c in courses.items():
-        g.add_node(cid, labels=["Course"], id=cid, title=c["title_zh"])
+        g.add_node(cid, labels=["Course"], id=cid, title=c["title"])
     for e in enrollments:
         g.add_edge(e["student_no"], e["course_code"], type="ENROLLED_IN",
                    semester=e["semester"], recorded_on=e["recorded_on"],
@@ -210,7 +209,7 @@ def to_cypher(students, courses, enrollments, teaching=(), claims=()):
         extra = " SET s:GraduateStudent" if s["level"] == "graduate" else ""
         lines.append(f"MERGE (s:Student {{id:{q(sid)}}}) SET s.name={q(s['name'])}{extra};")
     for cid, c in courses.items():
-        lines.append(f"MERGE (c:Course {{id:{q(cid)}}}) SET c.title={q(c['title_zh'])};")
+        lines.append(f"MERGE (c:Course {{id:{q(cid)}}}) SET c.title={q(c['title'])};")
     lines.append("")
     for e in enrollments:
         lines.append(

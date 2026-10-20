@@ -43,26 +43,24 @@ ex:ENR_S03_C02_115-1 a ex:Enrollment ;
     ex:student ex:S03 .
 
 ex:T01 a ex:Teacher ;
-    rdfs:label "王老師"@zh ;
+    rdfs:label "Lydia Lin"@en ;
     ex:teaches ex:C02 .
 
 ex:S01 a ex:GraduateStudent ;
     ex:enrolledIn ex:C01 ;
-    ex:name "小美"@zh .
+    ex:name "Mei"@en .
 
 ex:S02 a ex:Student ;
     ex:enrolledIn ex:C01 ;
-    ex:name "小華"@zh .
+    ex:name "Hua"@en .
 
 ex:C02 a ex:Course ;
-    rdfs:label "Computer Networks"@en,
-        "資訊網路"@zh .
+    rdfs:label "Computer Networks"@en .
 
 ex:S03 a ex:Student ;
     ex:enrolledIn ex:C02 ;
-    ex:name "小明"@zh .
+    ex:name "Ming"@en .
 
 ex:C01 a ex:Course ;
-    rdfs:label "Data Mining"@en,
-        "資料探勘"@zh .
+    rdfs:label "Data Mining"@en .
 

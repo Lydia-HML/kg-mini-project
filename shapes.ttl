@@ -11,26 +11,26 @@ ex:StudentShape a sh:NodeShape ;
         sh:path ex:name ;
         sh:datatype rdf:langString ;      # 姓名必須是語言標記字串 literal
         sh:minCount 1 ; sh:maxCount 1 ;
-        sh:message "Student 必須恰有一個語言標記的 ex:name literal" ;
+        sh:message "A Student must have exactly one language-tagged ex:name literal" ;
     ] ;
     sh:property [
         sh:path ex:enrolledIn ;
         sh:class ex:Course ;              # 物件必須是 Course
         sh:nodeKind sh:IRI ;
-        sh:message "ex:enrolledIn 的物件必須是 ex:Course 的 IRI" ;
+        sh:message "The object of ex:enrolledIn must be an ex:Course IRI" ;
     ] .
 
 # 方向檢查：任何 enrolledIn 的主詞都必須「已被宣告」為 Student（抓反向邊 C01 → S01）
 ex:EnrolledInSubjectShape a sh:NodeShape ;
     sh:targetSubjectsOf ex:enrolledIn ;
     sh:class ex:Student ;
-    sh:message "ex:enrolledIn 的主詞必須是 ex:Student（方向是否寫反？）" .
+    sh:message "The subject of ex:enrolledIn must be an ex:Student (is the edge reversed?)" .
 
 ex:ClaimShape a sh:NodeShape ;
     sh:targetClass ex:EnrollmentClaim ;
     sh:property [ sh:path ex:status ; sh:in ( "unverified" "confirmed" "refuted" ) ; sh:minCount 1 ] ;
     sh:property [ sh:path ex:source ; sh:minCount 1 ;
-                  sh:message "每筆主張必須標示來源" ] .
+                  sh:message "Every claim must state its source" ] .
 
 ex:EnrollmentShape a sh:NodeShape ;
     sh:targetClass ex:Enrollment ;
@@ -39,4 +39,4 @@ ex:EnrollmentShape a sh:NodeShape ;
     sh:property [ sh:path ex:semester ; sh:datatype xsd:string ; sh:minCount 1 ] ;
     sh:property [ sh:path ex:recordedOn ; sh:datatype xsd:date ; sh:minCount 1 ] ;
     sh:property [ sh:path ex:sourceFile ; sh:minCount 1 ;
-                  sh:message "每筆修課紀錄須可追溯來源檔案" ] .
+                  sh:message "Every enrollment must trace back to a source file" ] .
