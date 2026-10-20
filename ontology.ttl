@@ -1,0 +1,38 @@
+# ─── TBox：概念層（講義第 14、15、21 頁）───
+@prefix ex:   <https://ex.org/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Student          a owl:Class ; rdfs:label "學生"@zh .
+ex:GraduateStudent  a owl:Class ; rdfs:subClassOf ex:Student ; rdfs:label "研究生"@zh .
+ex:Course           a owl:Class ; rdfs:label "課程"@zh .
+ex:Teacher          a owl:Class ; rdfs:label "教師"@zh .
+ex:Enrollment       a owl:Class ; rdfs:label "修課紀錄（事件／陳述節點）"@zh .
+ex:EnrollmentClaim  a owl:Class ; rdfs:label "修課主張（未確認／有衝突的證據）"@zh ;
+    rdfs:comment "不等於確定的 ex:enrolledIn；只記錄某來源『聲稱』的內容與狀態（講義第 22–23 頁）"@zh .
+ex:Student owl:disjointWith ex:Course .
+
+ex:teaches a owl:ObjectProperty ; rdfs:domain ex:Teacher ; rdfs:range ex:Course .
+ex:status  a owl:DatatypeProperty ; rdfs:domain ex:EnrollmentClaim ; rdfs:range xsd:string .
+ex:source  a owl:DatatypeProperty ; rdfs:range xsd:string .
+
+# 主要關係：學生 → 課程（方向固定）
+ex:enrolledIn a owl:ObjectProperty ;
+    rdfs:domain ex:Student ;
+    rdfs:range  ex:Course ;
+    rdfs:label  "修課"@zh .
+
+ex:name  a owl:DatatypeProperty ; rdfs:domain ex:Student ; rdfs:range rdf:langString .
+
+# 修課事件（n-ary）：保留學期、來源、紀錄日期（第 5、12 頁）
+# 注意：ex:student / ex:course 同時用於 Enrollment 與 EnrollmentClaim，故「刻意不宣告 rdfs:domain」。
+# 若寫 rdfs:domain ex:Enrollment，RDFS 推論會把每筆「未確認主張」推成確定的 Enrollment
+# ——正是講義第 21 頁「domain/range 是推論，不是拒絕」的實例（第一版就踩到這個坑）。
+ex:student     a owl:ObjectProperty ; rdfs:range ex:Student .
+ex:course      a owl:ObjectProperty ; rdfs:range ex:Course .
+ex:semester    a owl:DatatypeProperty ; rdfs:range xsd:string .
+ex:recordedOn  a owl:DatatypeProperty ; rdfs:range xsd:date .
+ex:sourceFile  a owl:DatatypeProperty ; rdfs:range xsd:string .
+ex:sourceRow   a owl:DatatypeProperty ; rdfs:range xsd:integer .

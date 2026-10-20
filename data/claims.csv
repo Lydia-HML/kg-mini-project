@@ -1,0 +1,3 @@
+student_no,course_code,semester,status,source,recorded_on
+S03,C01,115-1,unverified,llm_extraction:meeting_notes_1015,2026-10-15
+S03,C01,115-1,refuted,registrar_export_1016,2026-10-16

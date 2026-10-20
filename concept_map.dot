@@ -1,0 +1,36 @@
+// 概念圖：10 個節點（類別層 4 + 個體層 6），講義第 23 頁繳交物
+digraph KG {
+  graph [rankdir=LR, fontname="Noto Sans CJK TC", fontsize=12, nodesep=0.45, ranksep=0.8, bgcolor="white",
+         label="Mini Project 概念圖｜10 個節點：個體層 ABox（左上）＋ 類別層 Ontology TBox（右下）", labelloc=t];
+  node  [fontname="Noto Sans CJK TC", fontsize=11, shape=box, style="rounded,filled", color="#3d6b84"];
+  edge  [fontname="Noto Sans CJK TC", fontsize=9, color="#b8754a", fontcolor="#333333"];
+
+  subgraph cluster_tbox {
+    label="類別層 Ontology"; style="rounded,dashed"; color="#7a9bb0"; fontcolor="#3d6b84";
+    GraduateStudent [fillcolor="#e6eef7"];
+    Student [fillcolor="#e6eef7"];
+    Course  [fillcolor="#e6eef7"];
+    Teacher [fillcolor="#e6eef7"];
+    GraduateStudent -> Student [label="rdfs:subClassOf"];
+    Student -> Course [label="enrolledIn\n(domain→range)", style=dashed];
+    Teacher -> Course [label="teaches", style=dashed];
+  }
+
+  subgraph cluster_abox {
+    label="個體層 Instance data"; style="rounded,dashed"; color="#c9a46a"; fontcolor="#8a6a2f";
+    S01 [label="ex:S01\n小美", fillcolor="#fdf3dd"];
+    S02 [label="ex:S02\n小華", fillcolor="#fdf3dd"];
+    S03 [label="ex:S03\n小明", fillcolor="#fdf3dd"];
+    C01 [label="ex:C01\n資料探勘", fillcolor="#e7f5ee"];
+    C02 [label="ex:C02\n資訊網路", fillcolor="#e7f5ee"];
+    T01 [label="ex:T01\n王老師", fillcolor="#fdf3dd"];
+    S01 -> C01 [label="enrolledIn\nsemester=115-1"];
+    S02 -> C01 [label="enrolledIn\nsemester=115-1"];
+    S03 -> C02 [label="enrolledIn"];
+    T01 -> C02 [label="teaches\nyear=2026"];
+    S03 -> C01 [label="主張：unverified (LLM)\n vs refuted (教務處)\n→ 不建立 enrolledIn", style=dotted, color="#b0413e", fontcolor="#b0413e", arrowhead=odot];
+  }
+
+  S01 -> GraduateStudent [label="rdf:type", color="#8899aa", style=dashed];
+  C01 -> Course [label="rdf:type", color="#8899aa", style=dashed];
+}

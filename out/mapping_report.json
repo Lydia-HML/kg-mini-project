@@ -1,0 +1,19 @@
+{
+  "rejected": [
+    "enrollment.csv:6 無法對應的學號 S09",
+    "enrollment.csv:7 空的 course_code"
+  ],
+  "duplicates": [
+    "enrollment.csv:4 與第 3 列重複 ('S02', 'C01', '115-1')"
+  ],
+  "warnings": [],
+  "counts": {
+    "students": 3,
+    "courses": 2,
+    "teachers": 1,
+    "enrollments": 3,
+    "claims": 2
+  },
+  "shacl_conforms": true,
+  "triples": 53
+}

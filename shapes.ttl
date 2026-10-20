@@ -1,0 +1,42 @@
+# ─── SHACL：資料完整性驗證（講義第 21、22 頁）───
+# 與 rdfs:range 不同：range 只會「推論」型別，SHACL 才會「回報違規」。
+@prefix ex:   <https://ex.org/> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+ex:StudentShape a sh:NodeShape ;
+    sh:targetClass ex:Student ;
+    sh:property [
+        sh:path ex:name ;
+        sh:datatype rdf:langString ;      # 姓名必須是語言標記字串 literal
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:message "Student 必須恰有一個語言標記的 ex:name literal" ;
+    ] ;
+    sh:property [
+        sh:path ex:enrolledIn ;
+        sh:class ex:Course ;              # 物件必須是 Course
+        sh:nodeKind sh:IRI ;
+        sh:message "ex:enrolledIn 的物件必須是 ex:Course 的 IRI" ;
+    ] .
+
+# 方向檢查：任何 enrolledIn 的主詞都必須「已被宣告」為 Student（抓反向邊 C01 → S01）
+ex:EnrolledInSubjectShape a sh:NodeShape ;
+    sh:targetSubjectsOf ex:enrolledIn ;
+    sh:class ex:Student ;
+    sh:message "ex:enrolledIn 的主詞必須是 ex:Student（方向是否寫反？）" .
+
+ex:ClaimShape a sh:NodeShape ;
+    sh:targetClass ex:EnrollmentClaim ;
+    sh:property [ sh:path ex:status ; sh:in ( "unverified" "confirmed" "refuted" ) ; sh:minCount 1 ] ;
+    sh:property [ sh:path ex:source ; sh:minCount 1 ;
+                  sh:message "每筆主張必須標示來源" ] .
+
+ex:EnrollmentShape a sh:NodeShape ;
+    sh:targetClass ex:Enrollment ;
+    sh:property [ sh:path ex:student ; sh:class ex:Student ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path ex:course  ; sh:class ex:Course  ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path ex:semester ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path ex:recordedOn ; sh:datatype xsd:date ; sh:minCount 1 ] ;
+    sh:property [ sh:path ex:sourceFile ; sh:minCount 1 ;
+                  sh:message "每筆修課紀錄須可追溯來源檔案" ] .

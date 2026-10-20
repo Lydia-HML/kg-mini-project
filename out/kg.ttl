@@ -1,0 +1,68 @@
+@prefix ex: <https://ex.org/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:CLAIM_2 a ex:EnrollmentClaim ;
+    ex:course ex:C01 ;
+    ex:recordedOn "2026-10-15"^^xsd:date ;
+    ex:semester "115-1"^^xsd:string ;
+    ex:source "llm_extraction:meeting_notes_1015" ;
+    ex:status "unverified" ;
+    ex:student ex:S03 .
+
+ex:CLAIM_3 a ex:EnrollmentClaim ;
+    ex:course ex:C01 ;
+    ex:recordedOn "2026-10-16"^^xsd:date ;
+    ex:semester "115-1"^^xsd:string ;
+    ex:source "registrar_export_1016" ;
+    ex:status "refuted" ;
+    ex:student ex:S03 .
+
+ex:ENR_S01_C01_115-1 a ex:Enrollment ;
+    ex:course ex:C01 ;
+    ex:recordedOn "2026-09-01"^^xsd:date ;
+    ex:semester "115-1"^^xsd:string ;
+    ex:sourceFile "enrollment.csv" ;
+    ex:sourceRow 2 ;
+    ex:student ex:S01 .
+
+ex:ENR_S02_C01_115-1 a ex:Enrollment ;
+    ex:course ex:C01 ;
+    ex:recordedOn "2026-09-02"^^xsd:date ;
+    ex:semester "115-1"^^xsd:string ;
+    ex:sourceFile "enrollment.csv" ;
+    ex:sourceRow 3 ;
+    ex:student ex:S02 .
+
+ex:ENR_S03_C02_115-1 a ex:Enrollment ;
+    ex:course ex:C02 ;
+    ex:recordedOn "2026-09-03"^^xsd:date ;
+    ex:semester "115-1"^^xsd:string ;
+    ex:sourceFile "enrollment.csv" ;
+    ex:sourceRow 5 ;
+    ex:student ex:S03 .
+
+ex:T01 a ex:Teacher ;
+    rdfs:label "王老師"@zh ;
+    ex:teaches ex:C02 .
+
+ex:S01 a ex:GraduateStudent ;
+    ex:enrolledIn ex:C01 ;
+    ex:name "小美"@zh .
+
+ex:S02 a ex:Student ;
+    ex:enrolledIn ex:C01 ;
+    ex:name "小華"@zh .
+
+ex:C02 a ex:Course ;
+    rdfs:label "Computer Networks"@en,
+        "資訊網路"@zh .
+
+ex:S03 a ex:Student ;
+    ex:enrolledIn ex:C02 ;
+    ex:name "小明"@zh .
+
+ex:C01 a ex:Course ;
+    rdfs:label "Data Mining"@en,
+        "資料探勘"@zh .
+
