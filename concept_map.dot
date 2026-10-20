@@ -18,11 +18,11 @@ digraph KG {
 
   subgraph cluster_abox {
     label="個體層 Instance data"; style="rounded,dashed"; color="#c9a46a"; fontcolor="#8a6a2f";
-    S01 [label="ex:S01\nMei", fillcolor="#fdf3dd"];
-    S02 [label="ex:S02\nHua", fillcolor="#fdf3dd"];
-    S03 [label="ex:S03\nMing", fillcolor="#fdf3dd"];
-    C01 [label="ex:C01\nData Mining", fillcolor="#e7f5ee"];
-    C02 [label="ex:C02\nComputer Networks", fillcolor="#e7f5ee"];
+    S01 [label="ex:S01\nJudy", fillcolor="#fdf3dd"];
+    S02 [label="ex:S02\nAlbert", fillcolor="#fdf3dd"];
+    S03 [label="ex:S03\nAnita", fillcolor="#fdf3dd"];
+    C01 [label="ex:C01  MI5110701\nData Mining and\nKnowledge Discovery", fillcolor="#e7f5ee"];
+    C02 [label="ex:C02  MI4206301\nInformation Networks", fillcolor="#e7f5ee"];
     T01 [label="ex:T01\nLydia Lin", fillcolor="#fdf3dd"];
     S01 -> C01 [label="enrolledIn\nsemester=115-1"];
     S02 -> C01 [label="enrolledIn\nsemester=115-1"];

@@ -26,6 +26,12 @@ ex:EnrolledInSubjectShape a sh:NodeShape ;
     sh:class ex:Student ;
     sh:message "The subject of ex:enrolledIn must be an ex:Student (is the edge reversed?)" .
 
+ex:CourseShape a sh:NodeShape ;
+    sh:targetClass ex:Course ;
+    sh:property [ sh:path ex:courseNumber ; sh:datatype xsd:string ;
+                  sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[A-Z]{2}[0-9]{7}$" ;
+                  sh:message "A Course must have exactly one course number such as MI5110701" ] .
+
 ex:ClaimShape a sh:NodeShape ;
     sh:targetClass ex:EnrollmentClaim ;
     sh:property [ sh:path ex:status ; sh:in ( "unverified" "confirmed" "refuted" ) ; sh:minCount 1 ] ;

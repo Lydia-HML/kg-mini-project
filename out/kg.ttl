@@ -49,19 +49,21 @@ ex:T01 a ex:Teacher ;
 
 ex:S01 a ex:GraduateStudent ;
     ex:enrolledIn ex:C01 ;
-    ex:name "Mei"@en .
+    ex:name "Judy"@en .
 
 ex:S02 a ex:Student ;
     ex:enrolledIn ex:C01 ;
-    ex:name "Hua"@en .
+    ex:name "Albert"@en .
 
 ex:C02 a ex:Course ;
-    rdfs:label "Computer Networks"@en .
+    rdfs:label "Information Networks"@en ;
+    ex:courseNumber "MI4206301" .
 
 ex:S03 a ex:Student ;
     ex:enrolledIn ex:C02 ;
-    ex:name "Ming"@en .
+    ex:name "Anita"@en .
 
 ex:C01 a ex:Course ;
-    rdfs:label "Data Mining"@en .
+    rdfs:label "Data Mining and Knowledge Discovery"@en ;
+    ex:courseNumber "MI5110701" .
 

@@ -90,6 +90,7 @@ def build_rdf(students, courses, enrollments, teaching=(), claims=()):
         node = EX[cid]
         g.add((node, RDF.type, EX.Course))
         g.add((node, RDFS.label, Literal(c["title"], lang="en")))
+        g.add((node, EX.courseNumber, Literal(c["course_no"])))
     for e in enrollments:
         s, c = EX[e["student_no"]], EX[e["course_code"]]
         g.add((s, EX.enrolledIn, c))                                   # 簡潔的直接邊（第 20 頁）
@@ -173,7 +174,7 @@ def build_lpg(students, courses, enrollments, teaching=(), claims=()):
         labels = ["Student"] + (["GraduateStudent"] if s["level"] == "graduate" else [])
         g.add_node(sid, labels=labels, id=sid, name=s["name"])
     for cid, c in courses.items():
-        g.add_node(cid, labels=["Course"], id=cid, title=c["title"])
+        g.add_node(cid, labels=["Course"], id=cid, title=c["title"], course_no=c["course_no"])
     for e in enrollments:
         g.add_edge(e["student_no"], e["course_code"], type="ENROLLED_IN",
                    semester=e["semester"], recorded_on=e["recorded_on"],
@@ -209,7 +210,7 @@ def to_cypher(students, courses, enrollments, teaching=(), claims=()):
         extra = " SET s:GraduateStudent" if s["level"] == "graduate" else ""
         lines.append(f"MERGE (s:Student {{id:{q(sid)}}}) SET s.name={q(s['name'])}{extra};")
     for cid, c in courses.items():
-        lines.append(f"MERGE (c:Course {{id:{q(cid)}}}) SET c.title={q(c['title'])};")
+        lines.append(f"MERGE (c:Course {{id:{q(cid)}}}) SET c.title={q(c['title'])}, c.course_no={q(c['course_no'])};")
     lines.append("")
     for e in enrollments:
         lines.append(

@@ -24,6 +24,9 @@ ex:enrolledIn a owl:ObjectProperty ;
     rdfs:range  ex:Course ;
     rdfs:label  "enrolled in"@en .
 
+ex:courseNumber a owl:DatatypeProperty ; rdfs:domain ex:Course ; rdfs:range xsd:string ;
+    rdfs:label "course number"@en .
+
 ex:name  a owl:DatatypeProperty ; rdfs:domain ex:Student ; rdfs:range rdf:langString .
 
 # 修課事件（n-ary）：保留學期、來源、紀錄日期（第 5、12 頁）

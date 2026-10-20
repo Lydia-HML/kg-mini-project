@@ -142,7 +142,7 @@ def test_NEG_duplicate_course_node_detected():
     """常見扣分：兩位學生各複製一個 C01"""
     s, c, e, *_ = b.load_sources()
     g = b.build_lpg(s, c, e)
-    g.add_node("C01_copy", labels=["Course"], id="C01", title="Data Mining")
+    g.add_node("C01_copy", labels=["Course"], id="C01", title="Data Mining and Knowledge Discovery")
     ids = [d["id"] for _, d in g.nodes(data=True) if "Course" in d["labels"]]
     assert len(ids) != len(set(ids)), "偵測函式應發現重複 id"
 
@@ -155,14 +155,27 @@ def test_one_teacher_teaches_two_courses(rdf, lpg):
     assert sorted(v for u, v, d in lpg.edges(data=True) if u == "T01" and d["type"] == "TEACHES") == ["C01", "C02"]
 
 
+def test_course_numbers(rdf, lpg):
+    assert str(rdf.value(EX.C01, EX.courseNumber)) == "MI5110701"
+    assert str(rdf.value(EX.C02, EX.courseNumber)) == "MI4206301"
+    assert lpg.nodes["C01"]["course_no"] == "MI5110701"
+
+
+def test_NEG_course_without_number_is_rejected(rdf, tbox):
+    bad = clone(rdf)
+    bad.remove((EX.C02, EX.courseNumber, None))
+    ok, _ = b.shacl_check(bad, tbox)
+    assert not ok
+
+
 # ════════════════ 查詢可執行性（20%）════════════════
 def test_sparql_students_of_c01(rdf):
     got = [(str(r.s).rsplit("/", 1)[-1], str(r.name)) for r in rdf.query(b.SPARQL_STUDENTS_OF_C01)]
-    assert got == [("S01", "Mei"), ("S02", "Hua")]
+    assert got == [("S01", "Judy"), ("S02", "Albert")]
 
 
 def test_lpg_students_of_c01(lpg):
-    assert b.lpg_students_of(lpg, "C01") == [("S01", "Mei"), ("S02", "Hua")]
+    assert b.lpg_students_of(lpg, "C01") == [("S01", "Judy"), ("S02", "Albert")]
 
 
 def test_cypher_script_has_constraints_and_queries(src):

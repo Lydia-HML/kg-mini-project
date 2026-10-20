@@ -2,11 +2,11 @@
 CREATE CONSTRAINT student_id IF NOT EXISTS FOR (s:Student) REQUIRE s.id IS UNIQUE;
 CREATE CONSTRAINT course_id  IF NOT EXISTS FOR (c:Course)  REQUIRE c.id IS UNIQUE;
 
-MERGE (s:Student {id:"S01"}) SET s.name="Mei" SET s:GraduateStudent;
-MERGE (s:Student {id:"S02"}) SET s.name="Hua";
-MERGE (s:Student {id:"S03"}) SET s.name="Ming";
-MERGE (c:Course {id:"C01"}) SET c.title="Data Mining";
-MERGE (c:Course {id:"C02"}) SET c.title="Computer Networks";
+MERGE (s:Student {id:"S01"}) SET s.name="Judy" SET s:GraduateStudent;
+MERGE (s:Student {id:"S02"}) SET s.name="Albert";
+MERGE (s:Student {id:"S03"}) SET s.name="Anita";
+MERGE (c:Course {id:"C01"}) SET c.title="Data Mining and Knowledge Discovery", c.course_no="MI5110701";
+MERGE (c:Course {id:"C02"}) SET c.title="Information Networks", c.course_no="MI4206301";
 
 MATCH (s:Student {id:"S01"}), (c:Course {id:"C01"}) MERGE (s)-[r:ENROLLED_IN {semester:"115-1"}]->(c) SET r.recorded_on=date("2026-09-01"), r.source="enrollment.csv:2";
 MATCH (s:Student {id:"S02"}), (c:Course {id:"C01"}) MERGE (s)-[r:ENROLLED_IN {semester:"115-1"}]->(c) SET r.recorded_on=date("2026-09-02"), r.source="enrollment.csv:3";
